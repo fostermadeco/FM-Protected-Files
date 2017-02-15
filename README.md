@@ -1,4 +1,8 @@
-Create an upload directory and place the files above the webroot. 
+Create an upload directory and place the files above the webroot.
+ 
+ If the files cannot be placed above the webroot, use htaccess to redirect the upload url to the protected url.
+ 
+    RewriteRule ^uploads/protected-directory/(.*)$ /downloads/$1 [R=301,NC,L]
 
 Create a template for the plugin tag, something like downloads/index.html. 
 
