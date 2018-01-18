@@ -61,10 +61,17 @@ class Fm_protected_files
         }
 
         // set header by content type
-        header('Content-Type: ' . get_mime_by_extension($filename));
+        header('Content-Type: ' . get_mime_by_extension($serverPath.$filename));
+        header('Content-Length: ' . filesize($serverPath.$filename));
 
-        // output the file
-        readfile($serverPath . $filename);
+        // Output file via buffer
+        ob_clean();
+        flush();
+        $fp = fopen($serverPath.$filename, 'r');
+        while(!feof($fp)) {
+            $buff = fread($fp, 1024);
+            print $buff;
+        }
     }
 
     /**
